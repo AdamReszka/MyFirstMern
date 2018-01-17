@@ -87,3 +87,23 @@ export function deletePost(req, res) {
     });
   });
 }
+
+export function postThumbUp(req, res) {
+  Post.findOneAndUpdate({ cuid: req.params.cuid }, {$inc: {voteCount: 1}}).exec((err, post) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+
+      res.status(200).end();
+  });
+}
+
+export function postThumbDown(req, res) {
+  Post.findOneAndUpdate({ cuid: req.params.cuid }, {$inc: {voteCount: -1}}).exec((err, post) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+
+      res.status(200).end();
+  });
+}
